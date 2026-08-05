@@ -46,7 +46,7 @@ function renderLine(line: string, i: number) {
   );
 }
 
-export function CodeBlock({ code, lang }: { code: string; lang?: string }) {
+export function CodeBlock({ code, lang }: { code: string; lang?: string | undefined }) {
   const [copied, setCopied] = useState(false);
 
   return (
