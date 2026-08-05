@@ -38,10 +38,9 @@ export type RagAnswer = {
 const trim = (base: string) => base.replace(/\/+$/, "");
 
 async function request<T>(base: string, path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${trim(base)}${path}`, {
-    ...init,
-    headers: init?.body instanceof FormData ? init?.headers : { "Content-Type": "application/json", ...init?.headers },
-  });
+  const headers = new Headers(init?.headers);
+  if (!(init?.body instanceof FormData)) headers.set("Content-Type", "application/json");
+  const res = await fetch(`${trim(base)}${path}`, { ...init, headers });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
   return (await res.json()) as T;
 }
