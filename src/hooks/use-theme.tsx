@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const KEY = "sip-rfc-explorer:theme";
+const KEY = "api-pulse-ai:theme";
 export type Theme = "dark" | "light";
 
 export function useTheme() {
