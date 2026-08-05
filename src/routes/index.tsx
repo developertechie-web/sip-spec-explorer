@@ -14,6 +14,7 @@ import {
   listDocuments,
   queryRag,
   storeBaseUrl,
+  uploadDocument,
   type IndexedDoc,
 } from "@/lib/sip-api";
 import { cn } from "@/lib/utils";
@@ -85,7 +86,7 @@ function Index() {
     setUploading(true);
     for (const file of files) {
       try {
-        const doc = await uploadOne(file);
+        const doc = await uploadDocument(baseUrl, file);
         setDocuments((d) => [...d.filter((x) => x.id !== doc.id), doc]);
         toast.success(`Indexed ${file.name}`);
       } catch (e) {
@@ -95,11 +96,6 @@ function Index() {
     setUploading(false);
     void refreshDocuments();
   };
-
-  async function uploadOne(file: File) {
-    const { uploadDocument } = await import("@/lib/sip-api");
-    return uploadDocument(baseUrl, file);
-  }
 
   const handleBuiltin = async (rfc: string) => {
     try {
