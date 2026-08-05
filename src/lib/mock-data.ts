@@ -49,8 +49,8 @@ export const apiEndpoints: ApiEndpoint[] = names.map((name, i) => {
   return {
     id: `api_${(i + 1).toString().padStart(3, "0")}`,
     name,
-    method: methods[Math.floor(seeded(i, 7) * methods.length)],
-    environment: envs[Math.floor(seeded(i, 11) * envs.length)],
+    method: methods[Math.floor(seeded(i, 7) * methods.length)] as HttpMethod,
+    environment: envs[Math.floor(seeded(i, 11) * envs.length)] as ApiEndpoint["environment"],
     latency,
     status,
     code: status === "failed" ? (r > 0.94 ? 503 : 500) : status === "warning" ? 429 : 200,
@@ -110,7 +110,7 @@ export type Execution = {
 
 export const executions: Execution[] = Array.from({ length: 26 }, (_, i) => {
   const ok = seeded(i, 29) > 0.18;
-  const api = apiEndpoints[i % apiEndpoints.length];
+  const api = apiEndpoints[i % apiEndpoints.length] as ApiEndpoint;
   return {
     id: `exec_${(9000 + i).toString(36)}${i}`,
     api: api.name,
